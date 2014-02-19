@@ -128,6 +128,7 @@ define archive::download (
   case $ensure {
     present: {
       exec {"download archive $name and check sum":
+        path    => "/usr/bin:/usr/sbin:/bin",
         command   => "curl ${insecure_arg} ${redirect_arg} -o ${src_target}/${name} ${url}",
         creates   => "${src_target}/${name}",
         logoutput => true,
@@ -144,6 +145,7 @@ define archive::download (
       }
 
       exec {"rm-on-error-${name}":
+        path    => "/usr/bin:/usr/sbin:/bin",
         command     => "rm -f ${src_target}/${name} ${src_target}/${name}.${digest_type} && exit 1",
         unless      => $checksum_cmd,
         cwd         => $src_target,
