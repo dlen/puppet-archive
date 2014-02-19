@@ -83,6 +83,7 @@ define archive::download (
             }
 
             exec {"download digest of archive $name":
+              path    => "/usr/bin:/usr/sbin:/bin",
               command => "curl ${insecure_arg} ${redirect_arg} -o ${src_target}/${name}.${digest_type} ${digest_src}",
               creates => "${src_target}/${name}.${digest_type}",
               timeout => $timeout,
